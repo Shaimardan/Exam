@@ -19,10 +19,9 @@ class FunctionParPainter(
     fun t1(t:Double)=t-1.0
     fun t2(t:Double)=t+1.0
 
-    var max: Double= 0.0
-    var min:Double= 0.0
 
-fun max(){
+
+/*fun max(){
     if(plane.xMin<1.0 && plane.xMax>-1.0){
     var l=plane.yMin
     while(l<=plane.yMax){
@@ -34,7 +33,7 @@ fun max(){
     }
     }
 
-}
+}*/
 
     override fun paint(g: Graphics){
         with (g as Graphics2D){
@@ -52,9 +51,9 @@ fun max(){
             setRenderingHints(rh)//для сглаживания
             with (plane) {
 
-                max()
-                var t=min
-                while(t<max){
+
+                var t=plane.tMin
+                while(t<plane.tMax){
                         if(xCrt2Scr(funX(t))<width-1)
                         drawLine(
                             xCrt2Scr(funX(t)),
@@ -63,11 +62,11 @@ fun max(){
                             yCrt2Scr(funY(t + 0.1)),
                         )
                         t = t + 0.1
+                    //,,
                 }
            }
         }
-            min=0.0
-            max=0.0
+
     }
 }
 

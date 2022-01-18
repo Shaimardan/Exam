@@ -30,6 +30,13 @@ class  MainFrame : JFrame(){
     val yMax: JSpinner
     val yMaxM: SpinnerNumberModel
 
+    val tMin: JSpinner
+    val tMinM: SpinnerNumberModel
+    val tMax: JSpinner
+    val tMaxM: SpinnerNumberModel
+
+
+
 
     var checkbox1:JCheckBox
     val checkbox2:JCheckBox
@@ -49,6 +56,9 @@ class  MainFrame : JFrame(){
     val lableymin:JLabel
     val lableymax:JLabel
 
+    val labletmin:JLabel
+    val labletmax:JLabel
+
     //var addornot:Boolean
 
     // val point=mapOf(-1.0 to 1.0, 1.0 to 1.0, 0.0 to 0.0) as MutableMap<Double, Double>
@@ -67,6 +77,11 @@ class  MainFrame : JFrame(){
         yMin = JSpinner(yMinM)
         yMaxM = SpinnerNumberModel(5.0, -4.9, 100.0, 0.1)
         yMax = JSpinner(yMaxM)
+
+        tMinM = SpinnerNumberModel(-6.0, -100.0, 4.9, 0.1)
+        tMin = JSpinner(tMinM)
+        tMaxM = SpinnerNumberModel(6.0, -4.9, 100.0, 0.1)
+        tMax = JSpinner(tMaxM)
 
         checkbox1=JCheckBox()
         checkbox1.setSelected(true);
@@ -106,10 +121,19 @@ class  MainFrame : JFrame(){
         lableymax=JLabel()
         lableymax.setForeground(Color.WHITE)
 
+
+        labletmin=JLabel()
+        labletmin.setForeground(Color.WHITE)
+        labletmax=JLabel()
+        labletmax.setForeground(Color.WHITE)
+
         lablexmin.text="xMin"
         lablexmax.text="xMax"
         lableymin.text="yMin"
         lableymax.text="yMax"
+
+        labletmin.text="yMin"
+        labletmax.text="yMax"
 
 
         val plane=Plane(
@@ -118,35 +142,13 @@ class  MainFrame : JFrame(){
             yMinM.value as Double,
             yMaxM.value as Double
         )
-        val f1=funct()
-        val f2=FunPar()
+        val f1=Funct()
+
         val cartesianPainter = CartesianPainter(plane)//плоскасть
         val f11 = FunctionPainter(plane, f1::f)//
-        val fpar = FunctionParPainter(plane, f2::q,f2::w)//
-        //val cosPainter = FunctionPainter(plane, Math::cos)
-        //cosPainter.funColor = Color.GREEN
-        // val test1 = Test(3)
+        val fpar = FunctionParPainter(plane, f1::x,f1::y)//
 
-        // val test1Painter = FunctionPainter(plane, test1::f)
-        //test1Painter.funColor = Color.ORANGE
 
-        //чтобы в проге можно было динамически что то менять
-        //сылочный тип конструктор который применяет список
-        //чтобы автоматически менять
-        //val z=mapOf(-1.0 to 1.0, 1.0 to 1.0, 0.0 to 0.0) as MutableMap<Double, Double>
-
-      ////////////////////////////
-        /*
-        val z: MutableMap<Double, Double> = mutableMapOf()
-        val c= Newton(z)
-        val test2Painter = FunctionPainter(plane, c::invoke)
-        val test2Painter2 = FunctionPainter(plane, c::invokeDir)
-        val test2Painter3 = PointPainter(plane,point)
-        */
-        /////////////////////////
-
-        /*test2Painter.funColor = Color.PINK
-        */
         val painters = mutableListOf<Painter>(cartesianPainter)
         painters.add(f11)
         painters.add(fpar)
@@ -225,6 +227,23 @@ class  MainFrame : JFrame(){
             plane.ySegment = Pair(yMin.value as Double, yMax.value as Double)
             mainPanel.repaint()
         }
+
+
+
+        tMin.addChangeListener{
+            tMaxM.minimum = tMin.value as Double + 0.1
+            plane.tMin= tMin.value as Double
+            mainPanel.repaint()
+
+        }
+        tMax.addChangeListener{
+            tMinM.maximum = tMax.value as Double - 0.1
+            plane.tMax= tMax.value as Double
+            mainPanel.repaint()
+        }
+
+
+
         controlPanel.layout = GroupLayout(controlPanel).apply {
             setHorizontalGroup(
                 createSequentialGroup()
@@ -233,22 +252,26 @@ class  MainFrame : JFrame(){
                         createParallelGroup()
                             .addComponent(lablexmin)
                             .addComponent(lableymin)
+                            .addComponent(labletmin)
                     )
                     .addGroup(
                         createParallelGroup()
                             .addComponent(xMin, 100, 100, GroupLayout.PREFERRED_SIZE)
                             .addComponent(yMin, 100, 100, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tMin, 100, 100, GroupLayout.PREFERRED_SIZE)
                     )
                     .addGap(8)
                     .addGroup(
                         createParallelGroup()
                             .addComponent(lablexmax)
                             .addComponent(lableymax)
+                            .addComponent(labletmax)
                     )
                     .addGroup(
                         createParallelGroup()
                             .addComponent(xMax, 100, 100, GroupLayout.PREFERRED_SIZE)
                             .addComponent(yMax, 100, 100, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tMax, 100, 100, GroupLayout.PREFERRED_SIZE)
                     )
                     .addGap(8,8, Int.MAX_VALUE)
 
@@ -295,23 +318,28 @@ class  MainFrame : JFrame(){
                                 createSequentialGroup()
                                     .addComponent(xMin,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(yMin,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tMin,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 
                             )
                             .addGroup(
                                 createSequentialGroup()
                                     .addComponent(lablexmax)
                                     .addComponent(lableymax)
+                                    .addComponent(labletmax)
                             )
                             .addGroup(
                                 createSequentialGroup()
                                     .addComponent(xMax,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
                                     .addComponent(yMax,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tMax,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 
                             )
                             .addGroup(
                                 createSequentialGroup()
                                     .addComponent(lablexmin)
                                     .addComponent(lableymin)
+                                    .addComponent(labletmin)
+
                             )
 
                         //.addComponent(btnPress2,GroupLayout.PREFERRED_SIZE,GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)

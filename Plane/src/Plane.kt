@@ -65,6 +65,19 @@ class Plane (
     var yMax: Double = 0.0
         private set
 
+
+    var tMax:Double=6.0
+    var tMin:Double=-6.0
+
+    var tSegment: Pair<Double, Double>
+        get() = Pair(xMin, xMax)
+        set(value) {
+            val k = if (value.first == value.second) 0.1 else 0.0
+            tMin = value.first - k
+            tMax = value.second + k
+            if (tMin > tMax) tMin = tMax.also { tMax = tMin }
+        }
+
     /**
      * Свойство для задания границ отображаемого отрезка по оси абсцисс
      */
