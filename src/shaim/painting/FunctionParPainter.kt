@@ -16,24 +16,7 @@ class FunctionParPainter(
 
     var funColor: Color = Color.blue
 
-    fun t1(t:Double)=t-1.0
-    fun t2(t:Double)=t+1.0
 
-
-
-/*fun max(){
-    if(plane.xMin<1.0 && plane.xMax>-1.0){
-    var l=plane.yMin
-    while(l<=plane.yMax){
-       // if(t1(l)>max)max=t1(l)
-        if(t1(l)<min)min=t1(l)
-      //  if(t2(l)<min)min=t2(l)
-        if(t2(l)>max)max=t2(l)
-        l=l+0.1
-    }
-    }
-
-}*/
 
     override fun paint(g: Graphics){
         with (g as Graphics2D){

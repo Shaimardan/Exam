@@ -145,13 +145,13 @@ class  MainFrame : JFrame(){
         val f1=Funct()
 
         val cartesianPainter = CartesianPainter(plane)//плоскасть
-        val f11 = FunctionPainter(plane, f1::f)//
-        val fpar = FunctionParPainter(plane, f1::x,f1::y)//
+        val f11 = FunctionPainter(plane, f1)//
+       // val fpar = FunctionParPainter(plane, f1::x,f1::y)//
 
 
         val painters = mutableListOf<Painter>(cartesianPainter)
         painters.add(f11)
-        painters.add(fpar)
+      //  painters.add(fpar)
         mainPanel = GraphicsPanel(painters).apply {
             background = Color.WHITE
         }
@@ -165,17 +165,17 @@ class  MainFrame : JFrame(){
         })
 
         checkbox1.addItemListener(ItemListener {
-            if(checkbox1.isSelected)painters.add(f11)
-            else painters.remove(f11)
+            if(checkbox1.isSelected)
+                f11.fOrNot=true
+            else f11.fOrNot=false
+
             mainPanel.repaint()
         })
         checkbox2.addItemListener(ItemListener {
-            if(checkbox2.isSelected){
-               // painters.add(1,(test2Painter))
-                painters.add(fpar)
-            }
-            else painters.remove(fpar)
+            if(checkbox2.isSelected) f11.parOrNot=true
+            else f11.parOrNot=false //painters.remove(fpar)
             mainPanel.repaint()
+
         })
 
 
