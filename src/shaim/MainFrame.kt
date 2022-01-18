@@ -132,8 +132,8 @@ class  MainFrame : JFrame(){
         lableymin.text="yMin"
         lableymax.text="yMax"
 
-        labletmin.text="yMin"
-        labletmax.text="yMax"
+        labletmin.text="tMin"
+        labletmax.text="tMax"
 
 
         val plane=Plane(
@@ -165,8 +165,7 @@ class  MainFrame : JFrame(){
         })
 
         checkbox1.addItemListener(ItemListener {
-            if(checkbox1.isSelected)
-                f11.fOrNot=true
+            if(checkbox1.isSelected) f11.fOrNot=true
             else f11.fOrNot=false
 
             mainPanel.repaint()
